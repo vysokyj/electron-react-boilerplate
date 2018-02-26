@@ -68,6 +68,7 @@ var devServer = dev ? {
 } : {};
 
 module.exports = {
+  target: 'electron-main',
   entry: entry,
   output: output,
   devtool: devtool,
