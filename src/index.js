@@ -1,12 +1,8 @@
 // import 'semantic-ui-css/semantic.min.css';
 // import './index.css';
+
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './components/App';
-import { setConfig } from 'react-hot-loader'
-setConfig({ logLevel: 'debug' })
-
-/*
 import { applyMiddleware, createStore } from 'redux';
 import { Provider } from 'react-redux';
 import { routerMiddleware }  from 'react-router-redux';
@@ -14,6 +10,10 @@ import { createBrowserHistory } from 'history';
 import createSagaMiddleware from 'redux-saga'
 import sagas from './sagas'
 import rootReducer from './reducers';
+import { setConfig } from 'react-hot-loader';
+import App from './components/App';
+
+setConfig({ logLevel: 'debug' })
 
 const history = createBrowserHistory();
 const router = routerMiddleware(history);
@@ -31,11 +31,6 @@ ReactDOM.render(
   </Provider>,
   element
 );
-*/
-
-const element = document.getElementById('root');
-
-ReactDOM.render(<App />,  element);
 
 
 /*
