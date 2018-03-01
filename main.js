@@ -1,38 +1,38 @@
-const {app, BrowserWindow} = require("electron");
-const url = require("url");
-const path = require("path");
-const { default: installExtension, REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS } = require("electron-devtools-installer");
+const {app, BrowserWindow} = require('electron');
+const url = require('url');
+const path = require('path');
+const { default: installExtension, REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS } = require('electron-devtools-installer');
 
 let mainWindow;
 
+const dev = (process.env.NODE_ENV != 'production');
 
-const dev = (process.env.NODE_ENV != "production");
-
-const mainUrl = dev ? "http://localhost:3000" : url.format({
+const mainUrl = dev ? 'http://localhost:3000' : url.format({
   pathname: path.join(__dirname, 'index.html'),
   protocol: 'file:',
   slashes: true
 });
 
-console.log("Using url: %s", mainUrl);
+console.log('Using url: %s', mainUrl);
 
 app.on('ready', () => {
   mainWindow = new BrowserWindow({
-      height: 600,
-      width: 800
+    height: 768,
+    width: 1024
   });
 
   mainWindow.loadURL(mainUrl);
-
-  installExtension(REACT_DEVELOPER_TOOLS)
-    .then((name) => console.log(`Added Extension:  ${name}`))
-    .catch((err) => console.log('An error occurred: ', err));
-
-  installExtension(REDUX_DEVTOOLS)
-    .then((name) => console.log(`Added Extension:  ${name}`))
-    .catch((err) => console.log('An error occurred: ', err));  
+  if (dev) {
+    installExtension(REACT_DEVELOPER_TOOLS)
+      .then((name) => console.log(`Added Extension:  ${name}`))
+      .catch((err) => console.log('An error occurred: ', err));
+  
+    installExtension(REDUX_DEVTOOLS)
+      .then((name) => console.log(`Added Extension:  ${name}`))
+      .catch((err) => console.log('An error occurred: ', err)); 
+    mainWindow.webContents.openDevTools()
+  } 
 });
-
 
 // Start Webpack development serverr
 if (dev) {

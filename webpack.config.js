@@ -1,30 +1,30 @@
 var path = require('path');
 var webpack = require('webpack');
-var yargs = require("yargs");
-var pjson = require("./package.json")
+var yargs = require('yargs');
+var pjson = require('./package.json')
 
-var args = yargs.alias("p", "production").argv;
-var environment = args.production ? "production" : "development";
-var dev = (environment === "development");
-console.log("Environment: %s", environment);
-console.log("Application: %s@%s", pjson.name, pjson.version);
+var args = yargs.alias('p', 'production').argv;
+var environment = args.production ? 'production' : 'development';
+var dev = (environment === 'development');
+console.log('Environment: %s', environment);
+console.log('Application: %s@%s', pjson.name, pjson.version);
 
 
 var entry = dev ? [
-    'react-hot-loader/patch',
-    // activate HMR for React
+  'react-hot-loader/patch',
+  // activate HMR for React
 
-    'webpack-dev-server/client?http://localhost:3000',
-    // bundle the client for webpack-dev-server
-    // and connect to the provided endpoint
+  'webpack-dev-server/client?http://localhost:3000',
+  // bundle the client for webpack-dev-server
+  // and connect to the provided endpoint
 
-    'webpack/hot/only-dev-server',
-    // bundle the client for hot reloading
-    // only- means to only hot reload for successful updates
+  'webpack/hot/only-dev-server',
+  // bundle the client for hot reloading
+  // only- means to only hot reload for successful updates
 
-    './src/index.js',
-    // the entry point of our app
-  ] : './src/index.js';
+  './src/index.js',
+  // the entry point of our app
+] : './src/index.js';
 
 var output = dev ? {
   filename: 'bundle.js',
@@ -53,8 +53,9 @@ var rules = [
 var plugins = dev ? [
   new webpack.HotModuleReplacementPlugin(), // enable HMR globally
   new webpack.NamedModulesPlugin(), // prints more readable module names in the browser console on HMR updates
-  new webpack.NoEmitOnErrorsPlugin() // do not emit compiled assets that include errors  
-] : [];
+  new webpack.NoEmitOnErrorsPlugin() // do not emit compiled assets that include errors
+] : [
+];
 
 var devServer = dev ? {
   host: 'localhost',
