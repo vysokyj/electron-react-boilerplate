@@ -2,6 +2,12 @@
 // import './index.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
+
+import App from './components/App';
+import { AppContainer } from 'react-hot-loader';
+
+/* 
+
 import { applyMiddleware, createStore, combineReducers } from 'redux';
 import { routerReducer, routerMiddleware }  from 'react-router-redux';
 import { createBrowserHistory } from 'history';
@@ -10,8 +16,6 @@ import sagas from './sagas'
 import entitiesReducer from './reducers/entities';
 import collectionsReducer from './reducers/collections';
 import apiReducer from './reducers/api';
-import { AppContainer } from 'react-hot-loader';
-import App from './components/App';
 
 const rootReducer = combineReducers({
   api: apiReducer,
@@ -36,5 +40,30 @@ function render() {
   );
 } 
 
-render();
-if (module.hot) module.hot.accept('./components/App', () => render());
+*/ 
+
+const element = document.getElementById('root');
+
+const render = Component => {
+  ReactDOM.render(
+    <AppContainer>
+      <Component />
+    </AppContainer>,
+    element
+  )
+}
+
+render(App);
+
+// Webpack Hot Module Replacement API
+if (module.hot) {
+  module.hot.accept('./components/App', () => {
+    // if you are using harmony modules ({modules:false})
+    //render(App)
+    // in all other cases - re-require App manually
+    render(require('./components/App'))
+  })
+}
+ 
+
+
