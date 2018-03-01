@@ -1,62 +1,47 @@
+/*
 const {app, BrowserWindow} = require('electron');
+const { enableLiveReload } = require('electron-compile');
+const { default: installExtension, REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS } = require('electron-devtools-installer');
 const url = require('url');
 const path = require('path');
-const { default: installExtension, REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS } = require('electron-devtools-installer');
+*/
+
+import { app, BrowserWindow } from 'electron';
+import installExtension, { REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS} from 'electron-devtools-installer';
+import { enableLiveReload } from 'electron-compile';
 
 let mainWindow;
 
-const dev = (process.env.NODE_ENV != 'production');
+const isDevMode = process.execPath.match(/[\\/]electron/);
 
-const mainUrl = dev ? 'http://localhost:3000' : url.format({
-  pathname: path.join(__dirname, 'index.html'),
-  protocol: 'file:',
-  slashes: true
-});
 
-console.log('Using url: %s', mainUrl);
+if (isDevMode) enableLiveReload({ strategy: 'react-hmr' });
 
-app.on('ready', () => {
+
+const createWindow = async () => {
+  // Create the browser window.
   mainWindow = new BrowserWindow({
-    height: 768,
-    width: 1024
+    width: 800,
+    height: 600,
   });
 
-  mainWindow.loadURL(mainUrl);
-  if (dev) {
-    installExtension(REACT_DEVELOPER_TOOLS)
-      .then((name) => console.log(`Added Extension:  ${name}`))
-      .catch((err) => console.log('An error occurred: ', err));
-  
-    installExtension(REDUX_DEVTOOLS)
-      .then((name) => console.log(`Added Extension:  ${name}`))
-      .catch((err) => console.log('An error occurred: ', err)); 
-    mainWindow.webContents.openDevTools()
-  } 
-});
+  // and load the index.html of the app.
+  mainWindow.loadURL(`file://${__dirname}/index.html`);
 
-// Start Webpack development serverr
-if (dev) {
-  const webpack = require('webpack');
-  const WebpackDevServer = require('webpack-dev-server');
-  const config = require('./webpack.config');
-  console.log('Starting the dev web server...');
-  const port = 3000;
-  const path = require('path');
+  // Open the DevTools.
+  if (isDevMode) {
+    await installExtension(REACT_DEVELOPER_TOOLS);
+    await installExtension(REDUX_DEVTOOLS);
+    mainWindow.webContents.openDevTools();
+  }
 
-  const options = {
-    publicPath: '/static/',
-    hot: true,
-    inline: true,
-    //contentBase: 'www',
-    stats: { colors: true }
-  };
-
-  const server = new WebpackDevServer(webpack(config), options);
-
-  server.listen(port, 'localhost', function (err) {
-    if (err) {
-      console.log(err);
-    }
-    console.log('WebpackDevServer listening at localhost:', port);
+  // Emitted when the window is closed.
+  mainWindow.on('closed', () => {
+    // Dereference the window object, usually you would store windows
+    // in an array if your app supports multi windows, this is the time
+    // when you should delete the corresponding element.
+    mainWindow = null;
   });
-}
+};
+
+app.on('ready', createWindow);

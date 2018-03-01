@@ -1,11 +1,16 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
   <head>
-    <title>Sample App</title>
-  </head>
+    <meta charset="UTF-8">
+    <title>TDMBC</title>
   <body>
-    <div id='root'>
-    </div>
-    <script src="/static/bundle.js"></script>
+    <div id="root"></div>
+    <script type="application/javascript">localStorage.debug = 'electron-compile:require-hook'</script>
+    <script type="text/jsx">
+      import React from 'react'
+      import ReactDOM from 'react-dom'
+      import App from './src/components/App'
+      ReactDOM.render(<App />, document.getElementById('root'))
+      </script>
   </body>
 </html>

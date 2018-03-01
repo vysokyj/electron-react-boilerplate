@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { hot } from 'react-hot-loader'
 import Layout from './Layout';
 import Counter from './Counter';
 
@@ -8,7 +9,7 @@ import Counter from './Counter';
 // you will see a warning from <Router> on every reload.
 // You can ignore this warning. For details, see:
 // https://github.com/reactjs/react-router/issues/2182
-export default class App extends Component {
+class App extends Component {
   render() {
     return (
       <Layout>
@@ -17,3 +18,5 @@ export default class App extends Component {
     );
   }
 }
+
+export default hot(module)(App);
