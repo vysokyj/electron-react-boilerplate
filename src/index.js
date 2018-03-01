@@ -21,12 +21,16 @@ const rootReducer = combineReducers({
 const history = createBrowserHistory();
 const router = routerMiddleware(history);
 const saga = createSagaMiddleware();
-const createStoreWithMiddleware = applyMiddleware(router,saga)(createStore);
-const store = createStoreWithMiddleware(rootReducer);
+let store;
+if (process.env.NODE_ENV === 'production') {
+  const createStoreWithMiddleware = applyMiddleware(router,saga)(createStore);
+  store = createStoreWithMiddleware(rootReducer);
+} else {
+  const createStoreWithMiddleware = applyMiddleware(router,saga)(createStore);
+  store = createStoreWithMiddleware(rootReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+}
 
 saga.run(sagas);
 
-ReactDOM.render(<App />, document.getElementById('root'));
- 
-
+ReactDOM.render(<App store={store} history={history} />, document.getElementById('root'));
 
