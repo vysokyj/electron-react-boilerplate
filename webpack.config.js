@@ -9,6 +9,16 @@ var dev = (environment === "development");
 console.log("Environment: %s", environment);
 console.log("Application: %s@%s", pjson.name, pjson.version);
 
+process.env.BABEL_ENV = environment;
+process.env.NODE_ENV = environment;
+
+const define = {
+    ENVIRONMENT: JSON.stringify(environment),
+    APP_NAME: JSON.stringify(pjson.name),
+    APP_VERSION: JSON.stringify(pjson.version),
+    "process.env.NODE_ENV": JSON.stringify(environment),
+    "process.env.BABEL_ENV": JSON.stringify(environment)
+};
 
 var entry = dev ? [
     "webpack-dev-server/client?http://localhost:3000",
@@ -16,14 +26,10 @@ var entry = dev ? [
     "./src/index.js",
 ] : "./src/index.js";
 
-var output = dev ? {
+var output =  {
     filename: "bundle.js",
-    path: path.resolve(__dirname, "dist"),
+    path: path.resolve(__dirname, "static"),
     publicPath: "/static/" // necessary for HMR
-} : {
-    filename: "static/bundle.js",
-    path: path.resolve(__dirname, "dist"),
-    publicPath: "/"
 };
 
 var devtool = dev ? "inline-source-map" : "source-map";
@@ -39,16 +45,20 @@ var rules = [
     {
         test: /\.css$/,
         use: [
-            "style-loader", "css-loader"
+            "style-loader",
+            "css-loader"
         ]
     }
 ];
 
+
 var plugins = dev ? [
+    new webpack.DefinePlugin(define),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NamedModulesPlugin(),
     new webpack.NoEmitOnErrorsPlugin()
 ] : [
+    new webpack.DefinePlugin(define)
 ];
 
 var devServer = dev ? {

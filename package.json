@@ -5,7 +5,8 @@
   "scripts": {
     "start": "electron .",
     "lint": "eslint src",
-    "build": "cross-env NODE_ENV=production webpack -p"
+    "build": "webpack -p && electron-builder",
+    "pack": "webpack -p && electron-builder --dir"
   },
   "repository": {
     "type": "git",
@@ -28,6 +29,45 @@
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/vysokyj/electron-react-boilerplate/issues"
+  },
+  "build": {
+    "productName": "ElectronReactBoilerplate",
+    "appId": "com.github.vysokyj.ElectronReactBoilerplate",
+    "files": [
+      "static/**/*",
+      "node_modules/**/*",
+      "main.js",
+      "index.html",
+      "package.json"
+    ],
+    "publish": null,
+    "dmg": {
+      "contents": [
+        {
+          "x": 130,
+          "y": 220
+        },
+        {
+          "x": 410,
+          "y": 220,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    },
+    "win": {
+      "target": [
+        "nsis"
+      ]
+    },
+    "linux": {
+      "target": [
+        "deb",
+        "rpm",
+        "AppImage"
+      ],
+      "category": "Development"
+    }
   },
   "homepage": "https://github.com/vysokyj/electron-react-boilerplate",
   "devDependencies": {
