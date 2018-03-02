@@ -5,8 +5,6 @@ import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 import {denormalize} from "normalizr";
 
-
-
 class RepoPage extends PureComponent {
 
     componentWillMount() {
@@ -16,8 +14,8 @@ class RepoPage extends PureComponent {
     render() {
         const {repositories} = this.props;
        
-        const listItems = repositories ? Object.keys(repositories).map((key) =>
-            <li key={key}><b>{repositories[key].name}</b> {repositories[key].description}</li>
+        const listItems = repositories ? repositories.map((repository) =>
+            <li key={repository.id}><b>{repository.name}</b> {repository.description}</li>
         ) : "";
         
         return (
@@ -31,10 +29,22 @@ class RepoPage extends PureComponent {
     }
 }
 
+function lastTimestamp(current, next) {
+    if (!current || (current < next)) current = next;
+    return current;
+}
+
+function getLastResultItems(state) {
+    if (!state || !state.entities || !state.entities.results) return [];
+    const results = state.entities.results;
+    var key = Object.keys(results).reduce(lastTimestamp);
+    const result = results[key];
+    return result.items;
+}
 
 const RepoPageContainer = connect(
     (state) => ({
-        repositories: state.entities.repositories
+        repositories: denormalize(getLastResultItems(state), schemas.repositories, state.entities)
     }),
     (dispatch) => ({
         githubActions: bindActionCreators(githubActions, dispatch)

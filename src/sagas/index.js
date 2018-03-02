@@ -45,6 +45,7 @@ function* onRestRequest(action) {
         }
         const result = yield fetch(action.url, params);
         const json = yield result.json();
+        if (!json.id) json.id = new Date().getTime(); // fix missing id on some requests
         const payload = normalize(json, getSchema(action));
         for (let header of result.headers.entries()) {
             if (header[0].toLowerCase() === "x-offset") payload.offset = parseInt(header[1], 10);
