@@ -1,5 +1,5 @@
-import { REST_SUCCESS } from '../constants/ActionTypes';
-import lodash from 'lodash';
+import { REST_SUCCESS } from "../constants/ActionTypes";
+import lodash from "lodash";
 
 const defaultState = {
   transactions: {},

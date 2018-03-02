@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import Counter from './Counter';
-import { Provider } from 'react-redux';
-import { ConnectedRouter } from 'react-router-redux';
-import { Route, Switch } from 'react-router';
-import { hot } from 'react-hot-loader';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import Counter from "./Counter";
+import { Provider } from "react-redux";
+import { ConnectedRouter } from "react-router-redux";
+import { Route, Switch } from "react-router";
+import { hot } from "react-hot-loader";
 
 class App extends React.PureComponent {
 
@@ -16,8 +16,8 @@ class App extends React.PureComponent {
   render() {
     const { store, history } = this.props;
     const date = new Date();
-    
-    return (      
+
+    return (
       <Provider store={store}>
         <ConnectedRouter history={history}>
           <div>
@@ -36,7 +36,7 @@ class App extends React.PureComponent {
             </footer>
           </div>
         </ConnectedRouter>
-      </Provider>      
+      </Provider>
     );
   }
 }

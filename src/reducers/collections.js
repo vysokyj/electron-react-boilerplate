@@ -1,4 +1,4 @@
-import { REST_SUCCESS } from '../constants/ActionTypes';
+import { REST_SUCCESS } from "../constants/ActionTypes";
 
 const defaultState = {
   pageOfTransactions: [],

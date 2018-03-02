@@ -1,4 +1,4 @@
-import {REST_FAILURE, REST_REQUEST, REST_SUCCESS} from '../constants/ActionTypes';
+import {REST_FAILURE, REST_REQUEST, REST_SUCCESS} from "../constants/ActionTypes";
 
 const defaultState = {
   connections: 0,
