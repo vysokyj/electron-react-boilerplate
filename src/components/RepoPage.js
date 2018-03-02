@@ -20,14 +20,14 @@ class RepoPage extends PureComponent {
 
     render() {
         const {compouterLanguages, selectedCompouterLanguage, repositories} = this.props;
-       
-        const listItems = repositories ? repositories.map((repository) =>
-            <li key={repository.id}><b>{repository.name}</b> {repository.description}</li>
-        ) : "";
-
+        
         const options = compouterLanguages.map((compouterLanguage) => 
-            <option value={compouterLanguage}>{compouterLanguage}</option>
+            <option key={compouterLanguage} value={compouterLanguage}>{compouterLanguage}</option>
         );
+        
+        const listItems = repositories ? repositories.map((repository) =>
+            <li key={repository.id}><b>{repository.owner.login}/{repository.name}</b> {repository.description}</li>
+        ) : "";
         
         return (
             <div>
@@ -40,8 +40,7 @@ class RepoPage extends PureComponent {
 }
 
 function lastTimestamp(current, next) {
-    if (!current || (current < next)) current = next;
-    return current;
+    return (!current || (current < next)) ? next : current;
 }
 
 function getLastResultItems(state) {
