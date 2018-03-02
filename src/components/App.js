@@ -24,7 +24,7 @@ class App extends React.PureComponent {
                 <ConnectedRouter history={history}>
                     <div>
                         <header>
-                            <Link to="/">Counter</Link> <Link to="/repo">Repo</Link>
+                            Examples: <Link to="/">Counter</Link> <Link to="/repo">Repo</Link>
                         </header>
                         <article className="container">
                             <Switch>

@@ -1,9 +1,6 @@
 import { REST_SUCCESS } from "../constants/ActionTypes";
 
-const defaultState = {
-    pageOfTransactions: [],
-    labels: []
-};
+const defaultState = {};
 
 export default function reducer(state = defaultState, action) {
     if (!action.collection) return state;
