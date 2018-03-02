@@ -4,14 +4,14 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { applyMiddleware, createStore} from "redux";
 import { routerMiddleware } from "react-router-redux";
-import { createBrowserHistory } from "history";
+import { createHashHistory } from "history";
 import createSagaMiddleware from "redux-saga"
 import reducers from "./reducers";
 import sagas from "./sagas";
 
 import App from "./components/App";
 
-const history = createBrowserHistory();
+const history = createHashHistory();
 const router = routerMiddleware(history);
 const saga = createSagaMiddleware();
 

@@ -33,9 +33,6 @@ class App extends React.PureComponent {
                             </Switch>
                         </article>
                         <footer>
-                            <div className="container">
-                                <p>Footer...</p>
-                            </div>
                         </footer>
                     </div>
                 </ConnectedRouter>
